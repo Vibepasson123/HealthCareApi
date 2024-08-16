@@ -4,6 +4,9 @@ FROM node:20.9.0
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install the Nest CLI globally (optional, only if you need it globally)
+RUN npm install -g @nestjs/cli
+
 # Copy package.json and package-lock.json files
 COPY package*.json ./
 
@@ -15,10 +18,9 @@ COPY . .
 
 # Run tests
 RUN npm test
+
 # Build the application
 RUN npm run build
-# Copy SSL certificates (if needed)
-#COPY key.pem cert.pem ./
 
 # Expose the application port
 EXPOSE 3000

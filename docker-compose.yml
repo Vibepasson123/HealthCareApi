@@ -1,13 +1,5 @@
-version: '3'
+version: '3.8'
 services:
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongo-data:/data/db
-
   app:
     build: .
     container_name: healthcare-api
@@ -15,8 +7,19 @@ services:
       - '3000:3000'
     environment:
       - MONGO_URI=mongodb://mongodb:27017/nest
+    volumes:
+      - .:/app
+      - /app/node_modules # Ensure node_modules is inside the container
     depends_on:
       - mongodb
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
 
 volumes:
   mongo-data:

@@ -20,7 +20,7 @@ describe('AppointmentsService', () => {
       save: jest.fn(),
     };
 
-    // Create a mock constructor function for appointmentModel
+    // Create a mock constructor function for appointmentModel that will mock the appointment model
     appointmentModel = jest.fn(() => ({
       save: jest.fn(),
     }));
@@ -100,19 +100,13 @@ describe('AppointmentsService', () => {
 
       patientsService.findOne.mockResolvedValue(null);
 
-      await expect(service.create(createAppointmentDto)).rejects.toThrow(
-        new NotFoundException(
-          `Patient with ID ${createAppointmentDto.patient_id} not found`,
-        ),
-      );
+      await expect(service.create(createAppointmentDto)).rejects.toThrow(new NotFoundException(`Patient with ID ${createAppointmentDto.patient_id} not found`));
     });
   });
 
   describe('findAll', () => {
     it('should return an array of appointments', async () => {
-      const appointments = [
-        { id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) },
-      ];
+      const appointments = [{ id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) }];
 
       appointmentModel.find.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValue(appointments),
@@ -125,9 +119,7 @@ describe('AppointmentsService', () => {
 
   describe('findWithFilters', () => {
     it('should return filtered appointments', async () => {
-      const appointments = [
-        { id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date())},
-      ];
+      const appointments = [{ id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) }];
 
       appointmentModel.find.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValue(appointments),
@@ -138,9 +130,7 @@ describe('AppointmentsService', () => {
     });
 
     it('should return filtered appointments with only patient_id', async () => {
-      const appointments = [
-        { id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) },
-      ];
+      const appointments = [{ id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) }];
 
       appointmentModel.find.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValue(appointments),
@@ -151,9 +141,7 @@ describe('AppointmentsService', () => {
     });
 
     it('should return filtered appointments with only doctor', async () => {
-      const appointments = [
-        { id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) },
-      ];
+      const appointments = [{ id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) }];
 
       appointmentModel.find.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValue(appointments),
@@ -167,7 +155,6 @@ describe('AppointmentsService', () => {
   describe('findOne', () => {
     it('should return an appointment if it exists', async () => {
       const appointment = { id: 1, patient_id: 1, doctor: 'Dr. Smith', appointment_date: String(new Date()) };
-
       appointmentModel.findOne.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValue(appointment),
       });
@@ -181,10 +168,7 @@ describe('AppointmentsService', () => {
       appointmentModel.findOne.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValue(null),
       });
-
-      await expect(service.findOne(999)).rejects.toThrow(
-        new NotFoundException(`Appointment with ID 999 not found`),
-      );
+      await expect(service.findOne(999)).rejects.toThrow(new NotFoundException(`Appointment with ID 999 not found`));
       expect(appointmentModel.findOne).toHaveBeenCalledWith({ id: 999 });
     });
   });

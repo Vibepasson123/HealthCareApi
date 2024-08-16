@@ -1,4 +1,3 @@
-// src/auth/auth.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
@@ -25,6 +24,7 @@ export class AuthService {
     }
 
     const token = this.generateJwt(user);
+    //@ts-ignore
     const { _id, name, email } = user;
 
     return {

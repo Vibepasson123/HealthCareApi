@@ -1,5 +1,3 @@
-// src/patients/dto/patient-response.dto.ts
-
 import { ApiProperty } from '@nestjs/swagger';
 
 export class PatientResponseDto {

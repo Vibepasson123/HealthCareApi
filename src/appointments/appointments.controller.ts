@@ -1,21 +1,10 @@
-// src/appointments/appointments.controller.ts
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Query,
-  NotFoundException,
-  UsePipes,
-  ParseIntPipe,
-} from '@nestjs/common';
-import { AppointmentsService } from './appointments.service';
-import { CreateAppointmentDto } from './dto/create-appointment.dto';
-import { Appointment } from './schema/appointment.schema';
-import { FindAppointmentDto } from './dto/find-appointment.dto';
+import { Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, Query, UsePipes } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentResponseDto } from './dto/create-appointment-response.dto';
+import { CreateAppointmentDto } from './dto/create-appointment.dto';
+import { FindAppointmentDto } from './dto/find-appointment.dto';
+import { Appointment } from './schema/appointment.schema';
 
 @ApiTags('appointments')
 @Controller('appointments')
@@ -41,9 +30,7 @@ export class AppointmentsController {
     status: 401,
     description: 'Unauthorized. Invalid or missing token.',
   })
-  async create(
-    @Body() createAppointmentDto: CreateAppointmentDto,
-  ): Promise<Appointment> {
+  async create(@Body() createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
     return this.appointmentsService.create(createAppointmentDto);
   }
 
@@ -59,10 +46,7 @@ export class AppointmentsController {
     description: 'Bad Request. Invalid query parameters.',
   })
   async findAll(@Query() query: FindAppointmentDto) {
-    return this.appointmentsService.findWithFilters(
-      query.patient_id,
-      query.doctor,
-    );
+    return this.appointmentsService.findWithFilters(query.patient_id, query.doctor);
   }
 
   @Get(':id')

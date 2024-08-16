@@ -1,13 +1,10 @@
+import { ArgumentMetadata, BadRequestException, NotFoundException, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppointmentsController } from './appointments.controller';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { FindAppointmentDto } from './dto/find-appointment.dto';
 import { Appointment } from './schema/appointment.schema';
-import { NotFoundException, BadRequestException, ValidationPipe, ArgumentMetadata } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { plainToInstance } from 'class-transformer';
-import { validate, ValidationError } from 'class-validator';
 
 describe('AppointmentsController', () => {
   let controller: AppointmentsController;
@@ -32,7 +29,6 @@ describe('AppointmentsController', () => {
     service = module.get<AppointmentsService>(AppointmentsService);
 
     const validationPipe = new ValidationPipe({ whitelist: true });
-    const reflector = new Reflector();
     controller['validationPipe'] = validationPipe;
   });
 
@@ -61,10 +57,13 @@ describe('AppointmentsController', () => {
 
       // Simulate validation
       await expect(
-        validationPipe.transform(invalidDto as any, {
-          type: 'body',
-          metatype: CreateAppointmentDto,
-        } as ArgumentMetadata)
+        validationPipe.transform(
+          invalidDto as any,
+          {
+            type: 'body',
+            metatype: CreateAppointmentDto,
+          } as ArgumentMetadata,
+        ),
       ).rejects.toThrowError(BadRequestException);
     });
   });
@@ -120,16 +119,12 @@ describe('AppointmentsController', () => {
       const id = 1;
       jest.spyOn(service, 'findOne').mockResolvedValue(null);
 
-      await expect(controller.findOne(id)).rejects.toThrow(
-        new NotFoundException(`Appointment with ID ${id} not found`),
-      );
+      await expect(controller.findOne(id)).rejects.toThrow(new NotFoundException(`Appointment with ID ${id} not found`));
     });
 
     it('should throw a BadRequestException if ID is invalid', async () => {
       const id = NaN; // Invalid ID
-      await expect(controller.findOne(id as any)).rejects.toThrow(
-        new BadRequestException('Appointment with ID NaN not found'),
-      );
+      await expect(controller.findOne(id as any)).rejects.toThrow(new BadRequestException('Appointment with ID NaN not found'));
     });
   });
 });

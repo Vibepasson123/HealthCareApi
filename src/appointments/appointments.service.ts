@@ -14,34 +14,21 @@ export class AppointmentsService {
     private readonly patientsService: PatientsService,
   ) {}
 
-  async create(
-    createAppointmentDto: CreateAppointmentDto,
-  ): Promise<Appointment> {
-    const patient = await this.patientsService.findOne(
-      createAppointmentDto.patient_id,
-    );
+  async create(createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
+    const patient = await this.patientsService.findOne(createAppointmentDto.patient_id);
 
     if (!patient) {
-      throw new NotFoundException(
-        `Patient with ID ${createAppointmentDto.patient_id} not found`,
-      );
+      throw new NotFoundException(`Patient with ID ${createAppointmentDto.patient_id} not found`);
     }
-    const nextId =
-      await this.idSequenceService.getNextSequenceValue('appointments');
-    const appointment = new this.appointmentModel({
-      id: nextId,
-      ...createAppointmentDto,
-    });
+    const nextId = await this.idSequenceService.getNextSequenceValue('appointments');
+    const appointment = new this.appointmentModel({ id: nextId, ...createAppointmentDto });
     return appointment.save();
   }
   async findAll(): Promise<Appointment[]> {
     return this.appointmentModel.find().exec();
   }
 
-  async findWithFilters(
-    patient_id?: number,
-    doctor?: string,
-  ): Promise<Appointment[]> {
+  async findWithFilters(patient_id?: number, doctor?: string): Promise<Appointment[]> {
     const filters: any = {};
     if (patient_id) {
       filters.patient_id = patient_id;
