@@ -610,6 +610,25 @@ To create a new Prescriptions is same as creating a new appointments. there are 
 ### Project Structure 
   All the secrets—project files, architecture, methods, and functions—will be revealed in the interview. Stay tuned, it’s like a tech mystery waiting to be solved!
 
+# Future Work and Enhancements
+
+1. **Doctor Authorization for Prescriptions:**
+   - Implement functionality to specify which doctor is creating a prescription. This will ensure that only authorized doctors can generate prescriptions and that their names are properly recorded.
+
+2. **Appointment Details and Restrictions:**
+   - Enhance the appointment system by including details about the doctor in appointment records.
+   - Prevent patients from scheduling multiple appointments at the same time to avoid conflicts.
+   - Introduce methods to reject or update appointment times, with changes managed based on user roles and permissions.
+
+3. **Prescription Enhancements:**
+   - Add fields for prescription duration and ensure that the doctor’s name is recorded.
+   - Incorporate standard abbreviations for medication to improve clarity and consistency.
+
+4. **Role-Based Access Control:**
+   - Implement role-based access control to define who can update specific data, such as appointment details and prescription information. This will ensure that only authorized personnel can make changes.
+
+These enhancements aim to improve system functionality, security, and compliance with healthcare standards, making the API more robust and user-friendly.
+
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://media.tenor.com/MTyONzJHiXAAAAAi/tkthao219-bubududu.gif" width="200" alt="Nest Logo" /></a>
