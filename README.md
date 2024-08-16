@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="  https://media.tenor.com/sYQmA3r2NEgAAAAi/tkthao219-bubududu.gif" width="200" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -408,16 +408,209 @@ POST http://localhost:3000/api/auth/login
   ```
 ### 5. Create Prescriptions
 
-## Support
+To create a new Prescriptions is same as creating a new appointments. there are differece in the request body and the parameters of response body, they are following as:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
- 
-## Stay in touch
+```bash 
+   #endPoints 
+    Post  .../api/prescriptions
+   # Request Body:
+   {
+    "patient_id": 1,
+    "medication": "Amoxicillin",
+    "dosage": "500mg",
+    "prescribed_date": "2024-08-15T08:30:00Z"  //date are in ISO 8601 format
+  }
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+   # Response Body:
+  {
+    "id": 1,
+    "patient_id": 1,
+    "medication": "Amoxicillin",
+    "dosage": "500mg",
+    "prescribed_date": "2024-08-15T08:30:00.000Z"     //date are in ISO 8601 format
+  }  
 
-## License
+  # Patient not found Error:
+  {
+    "message": "Patient with ID 6 not found",
+    "error": "Not Found",
+    "statusCode": 404
+  } 
+  
+  # validation fail error
+  {
+    "message": [
+      "medication must be a string"
+    ],
+    "error": "Bad Request",
+    "statusCode": 400
+  }
 
-Nest is [MIT licensed](LICENSE).
+  #get Appointment
+
+  #endPoints 
+  GET  ...api/prescriptions
+
+   #get By Id
+  GET ...api/prescriptions/1
+
+  #getByQuery
+  GET ...api/prescriptions?patient_id=1&medication=Amoxicillin
+  ```
+
+## Project directory structure
+
+```bash
+┣ 📂appointments
+┃ ┣ 📂dto
+┃ ┃ ┣ 📜create-appointment-response.dto.d.ts
+┃ ┃ ┣ 📜create-appointment-response.dto.js
+┃ ┃ ┣ 📜create-appointment-response.dto.js.map
+┃ ┃ ┣ 📜create-appointment.dto.d.ts
+┃ ┃ ┣ 📜create-appointment.dto.js
+┃ ┃ ┣ 📜create-appointment.dto.js.map
+┃ ┃ ┣ 📜find-appointment.dto.d.ts
+┃ ┃ ┣ 📜find-appointment.dto.js
+┃ ┃ ┗ 📜find-appointment.dto.js.map
+┃ ┣ 📂schema
+┃ ┃ ┣ 📜appointment.schema.d.ts
+┃ ┃ ┣ 📜appointment.schema.js
+┃ ┃ ┗ 📜appointment.schema.js.map
+┃ ┣ 📜appointments.controller.d.ts
+┃ ┣ 📜appointments.controller.js
+┃ ┣ 📜appointments.controller.js.map
+┃ ┣ 📜appointments.module.d.ts
+┃ ┣ 📜appointments.module.js
+┃ ┣ 📜appointments.module.js.map
+┃ ┣ 📜appointments.service.d.ts
+┃ ┣ 📜appointments.service.js
+┃ ┗ 📜appointments.service.js.map
+┣ 📂auth
+┃ ┣ 📜auth.controller.d.ts
+┃ ┣ 📜auth.controller.js
+┃ ┣ 📜auth.controller.js.map
+┃ ┣ 📜auth.module.d.ts
+┃ ┣ 📜auth.module.js
+┃ ┣ 📜auth.module.js.map
+┃ ┣ 📜auth.service.d.ts
+┃ ┣ 📜auth.service.js
+┃ ┣ 📜auth.service.js.map
+┃ ┣ 📜jwt-auth.guard.d.ts
+┃ ┣ 📜jwt-auth.guard.js
+┃ ┣ 📜jwt-auth.guard.js.map
+┃ ┣ 📜jwt.strategy.d.ts
+┃ ┣ 📜jwt.strategy.js
+┃ ┗ 📜jwt.strategy.js.map
+┣ 📂id-sequence
+┃ ┣ 📂schema
+┃ ┃ ┣ 📜id-sequence.schema.d.ts
+┃ ┃ ┣ 📜id-sequence.schema.js
+┃ ┃ ┗ 📜id-sequence.schema.js.map
+┃ ┣ 📜id-sequence.module.d.ts
+┃ ┣ 📜id-sequence.module.js
+┃ ┣ 📜id-sequence.module.js.map
+┃ ┣ 📜id-sequence.service.d.ts
+┃ ┣ 📜id-sequence.service.js
+┃ ┗ 📜id-sequence.service.js.map
+┣ 📂patients
+┃ ┣ 📂dto
+┃ ┃ ┣ 📜create-patient-response.dto.d.ts
+┃ ┃ ┣ 📜create-patient-response.dto.js
+┃ ┃ ┣ 📜create-patient-response.dto.js.map
+┃ ┃ ┣ 📜create-patient.dto.d.ts
+┃ ┃ ┣ 📜create-patient.dto.js
+┃ ┃ ┗ 📜create-patient.dto.js.map
+┃ ┣ 📂schema
+┃ ┃ ┣ 📜patient.schema.d.ts
+┃ ┃ ┣ 📜patient.schema.js
+┃ ┃ ┗ 📜patient.schema.js.map
+┃ ┣ 📜patients.controller.d.ts
+┃ ┣ 📜patients.controller.js
+┃ ┣ 📜patients.controller.js.map
+┃ ┣ 📜patients.module.d.ts
+┃ ┣ 📜patients.module.js
+┃ ┣ 📜patients.module.js.map
+┃ ┣ 📜patients.service.d.ts
+┃ ┣ 📜patients.service.js
+┃ ┗ 📜patients.service.js.map
+┣ 📂prescriptions
+┃ ┣ 📂dto
+┃ ┃ ┣ 📜create-prescription.dto.d.ts
+┃ ┃ ┣ 📜create-prescription.dto.js
+┃ ┃ ┣ 📜create-prescription.dto.js.map
+┃ ┃ ┣ 📜find-prescription.dto.d.ts
+┃ ┃ ┣ 📜find-prescription.dto.js
+┃ ┃ ┗ 📜find-prescription.dto.js.map
+┃ ┣ 📂schema
+┃ ┃ ┣ 📜prescription.schema.d.ts
+┃ ┃ ┣ 📜prescription.schema.js
+┃ ┃ ┗ 📜prescription.schema.js.map
+┃ ┣ 📜prescriptions.controller.d.ts
+┃ ┣ 📜prescriptions.controller.js
+┃ ┣ 📜prescriptions.controller.js.map
+┃ ┣ 📜prescriptions.module.d.ts
+┃ ┣ 📜prescriptions.module.js
+┃ ┣ 📜prescriptions.module.js.map
+┃ ┣ 📜prescriptions.service.d.ts
+┃ ┣ 📜prescriptions.service.js
+┃ ┗ 📜prescriptions.service.js.map
+┣ 📂users
+┃ ┣ 📂dto
+┃ ┃ ┣ 📜login-response.dto.d.ts
+┃ ┃ ┣ 📜login-response.dto.js
+┃ ┃ ┣ 📜login-response.dto.js.map
+┃ ┃ ┣ 📜login-user.dto.d.ts
+┃ ┃ ┣ 📜login-user.dto.js
+┃ ┃ ┣ 📜login-user.dto.js.map
+┃ ┃ ┣ 📜register-user.dto.d.ts
+┃ ┃ ┣ 📜register-user.dto.js
+┃ ┃ ┣ 📜register-user.dto.js.map
+┃ ┃ ┣ 📜user.dto.d.ts
+┃ ┃ ┣ 📜user.dto.js
+┃ ┃ ┗ 📜user.dto.js.map
+┃ ┣ 📜user.schema.d.ts
+┃ ┣ 📜user.schema.js
+┃ ┣ 📜user.schema.js.map
+┃ ┣ 📜users.controller.d.ts
+┃ ┣ 📜users.controller.js
+┃ ┣ 📜users.controller.js.map
+┃ ┣ 📜users.module.d.ts
+┃ ┣ 📜users.module.js
+┃ ┣ 📜users.module.js.map
+┃ ┣ 📜users.service.d.ts
+┃ ┣ 📜users.service.js
+┃ ┗ 📜users.service.js.map
+┣ 📂utils
+┃ ┣ 📂decorators
+┃ ┃ ┣ 📜public.decorator.d.ts
+┃ ┃ ┣ 📜public.decorator.js
+┃ ┃ ┗ 📜public.decorator.js.map
+┃ ┣ 📂pipes
+┃ ┃ ┣ 📜ParseIntPipe.d.ts
+┃ ┃ ┣ 📜ParseIntPipe.js
+┃ ┃ ┗ 📜ParseIntPipe.js.map
+┃ ┗ 📂validators
+┃   ┣ 📜is-utc-date-time.validator.d.ts
+┃   ┣ 📜is-utc-date-time.validator.js
+┃   ┗ 📜is-utc-date-time.validator.js.map
+┣ 📜app.controller.d.ts
+┣ 📜app.controller.js
+┣ 📜app.controller.js.map
+┣ 📜app.module.d.ts
+┣ 📜app.module.js
+┣ 📜app.module.js.map
+┣ 📜app.service.d.ts
+┣ 📜app.service.js
+┣ 📜app.service.js.map
+┣ 📜main.d.ts
+┣ 📜main.js
+┣ 📜main.js.map
+┗ 📜tsconfig.build.tsbuildinfo
+```
+### Project Structure 
+  All the secrets—project files, architecture, methods, and functions—will be revealed in the interview. Stay tuned, it’s like a tech mystery waiting to be solved!
+
+
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="  https://media.tenor.com/MTyONzJHiXAAAAAi/tkthao219-bubududu.gif" width="200" alt="Nest Logo" /></a>
+</p>
