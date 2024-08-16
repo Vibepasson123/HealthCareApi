@@ -24,7 +24,17 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project is designed as a technical assessment for a company, focusing on building a secure and scalable REST API for managing patient records, appointments, and medical prescriptions. The core objectives of the project include:
+
+- **Healthcare API Implementation:** Develop a comprehensive API that manages patient data, appointments, and prescriptions using Node.js and TypeScript. The API supports CRUD operations, allowing for the creation, retrieval, updating, and deletion of records.
+
+- **JWT Authentication:** Implement robust authentication using JSON Web Tokens (JWT) to secure all endpoints. This ensures that only authorized users can access sensitive data and perform operations within the API.
+
+- **Docker Containerization:** Utilize Docker to create `Dockerfile` and `docker-compose.yml` configurations for containerizing the application and MongoDB database. This facilitates consistent deployment and scaling of the application in different environments.
+
+- **Unit Testing:** Write and execute unit tests to validate the functionality and reliability of the API. Testing ensures that all features work as expected and helps maintain code quality.
+
+The project emphasizes a well-structured approach to API development, focusing on security, maintainability, and scalability. The goal is to provide a functional and secure API that meets the outlined requirements and can be easily deployed and managed.
 
 ## Installation without docker 
 ```bash
@@ -609,6 +619,26 @@ To create a new Prescriptions is same as creating a new appointments. there are 
 ```
 ### Project Structure 
   All the secrets—project files, architecture, methods, and functions—will be revealed in the interview. Stay tuned, it’s like a tech mystery waiting to be solved!
+
+# Future Work and Enhancements
+
+1. **Doctor Authorization for Prescriptions:**
+   - Implement functionality to specify which doctor is creating a prescription, ensuring that only authorized doctors can generate prescriptions and that their names are properly recorded.
+
+2. **Appointment Details and Restrictions:**
+   - Enhance the appointment system by including details about the doctor in appointment records.
+   - Prevent patients from scheduling multiple appointments at the same time to avoid conflicts.
+   - Introduce methods to reject or update appointment times, with changes managed based on user roles and permissions.
+
+3. **Prescription Enhancements:**
+   - Add fields for prescription duration and ensure that the doctor’s name is recorded.
+   - Incorporate standard abbreviations for medication to improve clarity and consistency.
+
+4. **Role-Based Access Control:**
+   - Implement role-based access control to define who can update specific data, such as appointment details and prescription information. This ensures that only authorized personnel can make changes.
+
+These enhancements aim to improve system functionality, security, and compliance with healthcare standards, making the API more robust and user-friendly.
+
 
 
 <p align="center">
